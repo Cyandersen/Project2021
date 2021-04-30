@@ -59,3 +59,18 @@ public class SampleController {
     private TextField txtsexe;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
