@@ -6,7 +6,8 @@ public class Sample {
 	private String department;
 	private Double number;
 	private Double charges;
-	
+	private Double total;
+
 	public Sample()
 	{
 		this(null,null);
@@ -20,6 +21,8 @@ public class Sample {
 		this.department="";
 		this.number=0.0;
 		this.charges=0.0;
+		this.total=0.0;
+
 	}
 	
 	public String getProcedure() {
@@ -52,7 +55,14 @@ public class Sample {
 	public void setCharges(Double charges) {
 		this.charges = charges;
 	}
-	
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
+	}
 	
 	
 }

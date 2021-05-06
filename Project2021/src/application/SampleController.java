@@ -76,8 +76,17 @@ public class SampleController implements Initializable {
 
 	@FXML
 	private TextField txtpro;
+	
+	@FXML
+    private Label lbltotal;
 
-	private ObservableList<String> list=(ObservableList<String>) FXCollections.observableArrayList("Scienssces","Droit","Medecine");
+    @FXML
+    private TextField txtotal;
+
+    @FXML
+    private TextField txtusername;
+
+	private ObservableList<String> list=(ObservableList<String>) FXCollections.observableArrayList("Service ambulatoire (OPD)", "Service d'hospitalisation (IP)", "Service médical", "Service d'urgence", "Service infirmier", "Service paramédical", "Service de médecine physique");
 
 	public ObservableList<Sample> SampleData=FXCollections.observableArrayList();
 
@@ -85,6 +94,7 @@ public class SampleController implements Initializable {
 	{
 		return SampleData;
 	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{

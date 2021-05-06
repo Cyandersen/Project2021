@@ -76,5 +76,7 @@
             <Font size="33.0" />
          </font>
       </Label>
+      <Label fx:id="lbltotal" layoutX="673.0" layoutY="311.0" text="Total" />
+      <TextField fx:id="txtotal" layoutX="729.0" layoutY="306.0" />
    </children>
 </AnchorPane>
