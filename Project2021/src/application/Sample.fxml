@@ -33,8 +33,8 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleNew" text="Nouveau" />
                   <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Ouvrir" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Save" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Save under" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Sauvegarder" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Sauvegarder sous" />
             </items>
           </Menu>
         </menus>

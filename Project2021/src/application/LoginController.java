@@ -8,9 +8,11 @@ package application;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 
 public class LoginController {
 
@@ -32,13 +34,18 @@ public class LoginController {
     {
     	this.main=main;
     }
-  
-    //pour ouvrir la fenetre de Sample avec l=informations de l'usager
+    
     public void Login(ActionEvent event) throws Exception
     {
-    	if(txtusername.getText().equals("username") && txtpassword.getText().equals("password"))
+    	if(txtusername.getText().equals("Toronto") && txtpassword.getText().equals("1700"))
     	{ main.Sample();
     	} else { 
-    		lblstatus.setText("login fail");}
+    		Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Mauvais identifiant");
+			alert.setHeaderText("Mauvaise connexion utilisée");
+			alert.setContentText("Indice: Capitale de l'Ontario et 200 + 600 + 900 \n");
+			alert.showAndWait();
+    		
     	}
+}
 }

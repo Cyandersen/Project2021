@@ -161,7 +161,7 @@ public class SampleController implements Initializable {
 		txtdate.setText("");
 		txtpro.setText("");
 		txtcharge.setText("");
-		txtnum.setText("");
+		txtnum.setText("");	
 	}
 
 	// Afficher les valeurs au tableau
@@ -225,7 +225,7 @@ public class SampleController implements Initializable {
 				table.getItems().remove(selectedIndex);
 			Double montant = sample.getCharges();
 			total1= total1 - montant;
-			txtotal.setText(Double.toString(montant));
+			txtotal.setText(Double.toString(total1));
 		}
 	}
 
@@ -240,7 +240,7 @@ public class SampleController implements Initializable {
 		txtotal.setText(Double.toString(tot));
 
 	}
-
+	
 	//Sauvegarde de données
 	
 	//Recuperer le chemin path des fichiers si ca existe
