@@ -85,6 +85,8 @@ public class SampleController implements Initializable {
 
     @FXML
     private TextField txtusername;
+    
+    private Double total1=0.0;
 
 	private ObservableList<String> list=(ObservableList<String>) FXCollections.observableArrayList("Service ambulatoire (OPD)", "Service d'hospitalisation (IP)", "Service médical", "Service d'urgence", "Service infirmier", "Service paramédical", "Service de médecine physique");
 
@@ -128,6 +130,9 @@ public class SampleController implements Initializable {
 			tmp.setNumber(Double.parseDouble(txtnum.getText()));
 			tmp.setCharges(Double.parseDouble(txtcharge.getText()));
 			tmp.setDepartment(combodept.getValue());
+			Double Charges=(Double.parseDouble(txtcharge.getText()));
+			total1+= Charges;
+			txtotal.setText(Double.toString(total1));
 			SampleData.add(tmp);
 			clearFields();
 		}
@@ -143,10 +148,10 @@ public class SampleController implements Initializable {
 		txtnum.setText("");
 	}
 
-	@FXML
+
 	public void showInfo(Sample sample)
 	{
-		if(sample!=null)
+		if(sample !=null)
 		{
 			combodept.setValue(sample.getDepartment());
 			txtdate.setText(sample.getDate());
@@ -165,7 +170,7 @@ public class SampleController implements Initializable {
 	}
 	
 	@FXML
-	public void updateEtudiant()
+	public void updateInfo()
 	{
 		{
 			if(noEmptyInput())
@@ -177,27 +182,47 @@ public class SampleController implements Initializable {
 				sample.setCharges(Double.parseDouble(txtcharge.getText()));
 				sample.setNumber(Double.parseDouble(txtnum.getText()));
 				sample.setDepartment(combodept.getValue());
+				Double montant1 = sample.getCharges();
+				total1= total1 +- montant1;
+				txtotal.setText(Double.toString(montant1));
 				table.refresh();
+				refreshTotal();
 			}
 		}
 		}
-
-		@FXML
-		public void deleteEtudiant()
+	
+	@FXML
+	public void deleteInfo()
 		{
 			int selectedIndex = table.getSelectionModel().getSelectedIndex();
 			if (selectedIndex >=0)
 			{
+				Sample sample=table.getSelectionModel().getSelectedItem();
 				Alert alert=new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Effacer");
 				alert.setContentText("Confirm la surpression");
 				Optional<ButtonType> result=alert.showAndWait();
 				if(result.get()==ButtonType.OK)
 					table.getItems().remove(selectedIndex);
+					Double montant = sample.getCharges();
+					total1= total1 - montant;
+					txtotal.setText(Double.toString(montant));
+				}
 			}
+		
+		void refreshTotal()
+		{
+			Double tot=0.0;
+			for(int i=0;i<table.getItems().size();i++)
+			{
+				tot = tot + Double.valueOf(String.valueOf(table.getColumns().get(4).getCellObservableValue(i).getValue()));
+			}
+			txtotal.setText(Double.toString(tot));
+					
 		}
-
-		public File getEtudiantFilePath()
+		
+		
+		public File getInfoFilePath()
 		{
 			Preferences prefs = Preferences.userNodeForPackage(Main.class);
 			String filePath = prefs.get("filePath", null);
@@ -212,7 +237,7 @@ public class SampleController implements Initializable {
 			}
 		}
 
-		public void setEtudiantFilePath(File file)
+		public void setInfoFilePath(File file)
 		{
 			Preferences prefs = Preferences.userNodeForPackage(Main.class);
 			if (file !=null)
@@ -225,7 +250,7 @@ public class SampleController implements Initializable {
 			}
 		}
 
-		public void loadEtudiantDataFromFile(File file)
+		public void loadInfoDataFromFile(File file)
 		{
 			try {
 				JAXBContext context = JAXBContext.newInstance(SampleListWrapper.class);
@@ -234,7 +259,7 @@ public class SampleController implements Initializable {
 				SampleListWrapper wrapper = (SampleListWrapper) um.unmarshal(file);
 				SampleData.clear();
 				SampleData.addAll(wrapper.getEtudiants());
-				setEtudiantFilePath(file);
+				setInfoFilePath(file);
 				Stage pStage=(Stage)table.getScene().getWindow();
 				pStage.setTitle(file.getName());
 
@@ -247,7 +272,7 @@ public class SampleController implements Initializable {
 			}
 		}
 
-		public void saveEtudiantDatatoFile(File file)
+		public void saveInfoDatatoFile(File file)
 		{
 			try {
 				JAXBContext context = JAXBContext.newInstance(SampleListWrapper.class);
@@ -258,7 +283,7 @@ public class SampleController implements Initializable {
 
 				m.marshal(wrapper, file);
 
-				setEtudiantFilePath(file);
+				setInfoFilePath(file);
 
 				Stage pStage=(Stage)table.getScene().getWindow();
 				pStage.setTitle(file.getName());
@@ -278,7 +303,7 @@ public class SampleController implements Initializable {
 		private void handleNew()
 		{
 			getSampleData().clear();
-			setEtudiantFilePath(null);
+			setInfoFilePath(null);
 		}
 
 		@FXML
@@ -294,17 +319,17 @@ public class SampleController implements Initializable {
 
 			if (file !=null)
 			{
-				loadEtudiantDataFromFile(file);
+				loadInfoDataFromFile(file);
 			}
 		}
 
 		@FXML
 		private void handleSave() {
 
-			File etudiantFile = getEtudiantFilePath();
+			File etudiantFile = getInfoFilePath();
 			if (etudiantFile != null){
-				saveEtudiantDatatoFile(etudiantFile);
-			} else {
+				saveInfoDatatoFile(etudiantFile);} 
+			else {
 				handleSaveAs();
 			}
 		}
@@ -323,7 +348,7 @@ public class SampleController implements Initializable {
 					file = new File(file.getPath() + ".xml");
 
 				}
-				saveEtudiantDatatoFile(file);
+				saveInfoDatatoFile(file);
 			}
 		}
 

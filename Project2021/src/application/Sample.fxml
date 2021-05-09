@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="656.0" prefWidth="1031.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+<AnchorPane prefHeight="637.0" prefWidth="1031.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
    <children>
-      <TableView fx:id="table" layoutX="68.0" layoutY="103.0" prefHeight="200.0" prefWidth="909.0">
+      <ImageView fitHeight="656.0" fitWidth="1031.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Downloads/wallpaper-blue.jpg" />
+         </image>
+      </ImageView>
+      <TableView fx:id="table" layoutX="68.0" layoutY="103.0" prefHeight="200.0" prefWidth="909.0" styleClass="primary" stylesheets="@application.css">
         <columns>
             <TableColumn fx:id="colnum" prefWidth="75.0" text="Numéro du patient" />
             <TableColumn fx:id="coldate" prefWidth="75.0" text="Date de la procédure" />
@@ -20,7 +26,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <MenuBar fx:id="menu" layoutX="6.0" layoutY="2.0">
+      <MenuBar fx:id="menu" layoutX="6.0" layoutY="2.0" styleClass="primary" stylesheets="@application.css">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -55,28 +61,46 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Département de supervision" GridPane.rowIndex="2" />
-            <Label text="Procédure" GridPane.rowIndex="3" />
-            <Label text="Frais" GridPane.rowIndex="4" />
+            <Label text="Département de supervision" textFill="#d0bdb0" GridPane.rowIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <Label text="Procédure" textFill="#d0bdb0" GridPane.rowIndex="3">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <Label text="Frais" textFill="#d0bdb0" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Label>
             <TextField fx:id="txtpro" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="Date de la procédure" GridPane.rowIndex="1" />
+            <Label text="Date de la procédure" textFill="#d0bdb0" GridPane.rowIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
             <TextField fx:id="txtdate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox fx:id="combodept" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="combodept" prefWidth="150.0" stylesheets="@application.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="txtcharge" onAction="#verifNum" onKeyTyped="#verifNum" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="Numéro du patient" />
-            <TextField fx:id="txtnum" onKeyTyped="#verifNum" GridPane.columnIndex="1" />
+            <Label text="Numéro du patient" textFill="#d0bdb0">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <TextField fx:id="txtnum" onKeyTyped="#verifNum" stylesheets="@application.css" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <Button fx:id="buttonajo" layoutX="110.0" layoutY="601.0" mnemonicParsing="false" onAction="#ajouter" text="Ajouter" />
-      <Button fx:id="buttonmod" layoutX="296.0" layoutY="600.0" mnemonicParsing="false" onAction="#updateEtudiant" text="Modifier" />
-      <Button fx:id="buttoneff" layoutX="490.0" layoutY="602.0" mnemonicParsing="false" onAction="#deleteEtudiant" text="Effacer" />
-      <Button fx:id="buttonrec" layoutX="729.0" layoutY="603.0" mnemonicParsing="false" onAction="#clearFields" text="Recommencer" />
-      <Label layoutX="298.0" layoutY="17.0" prefHeight="40.0" prefWidth="482.0" text="État de facturation de l'hôpital">
+      <Button fx:id="buttonajo" layoutX="110.0" layoutY="601.0" mnemonicParsing="false" onAction="#ajouter" styleClass="warning" stylesheets="@application.css" text="Ajouter" />
+      <Button fx:id="buttonmod" layoutX="296.0" layoutY="600.0" mnemonicParsing="false" onAction="#updateInfo" styleClass="danger" text="Modifier" />
+      <Button fx:id="buttoneff" layoutX="529.0" layoutY="602.0" mnemonicParsing="false" onAction="#deleteInfo" styleClass="success" stylesheets="@application.css" text="Effacer" />
+      <Button fx:id="buttonrec" layoutX="729.0" layoutY="603.0" mnemonicParsing="false" onAction="#clearFields" styleClass="info" stylesheets="@application.css" text="Recommencer" />
+      <Label layoutX="298.0" layoutY="17.0" prefHeight="40.0" prefWidth="482.0" text="État de facturation de l'hôpital" textFill="#ddc9bb">
          <font>
             <Font size="33.0" />
          </font>
       </Label>
-      <Label fx:id="lbltotal" layoutX="673.0" layoutY="311.0" text="Total" />
-      <TextField fx:id="txtotal" layoutX="729.0" layoutY="306.0" />
+      <Label fx:id="lbltotal" layoutX="673.0" layoutY="311.0" text="Total" textFill="#eed4c3">
+         <font>
+            <Font size="19.0" />
+         </font></Label>
+      <TextField fx:id="txtotal" editable="false" layoutX="729.0" layoutY="306.0" stylesheets="@application.css" />
    </children>
 </AnchorPane>

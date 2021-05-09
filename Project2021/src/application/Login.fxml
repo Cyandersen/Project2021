@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="521.0" prefWidth="845.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
+   <children>
+      <ImageView fitHeight="524.0" fitWidth="868.0" layoutX="-7.0" layoutY="-3.0">
+         <image>
+            <Image url="@../../../../../Downloads/wallpaper-blue.jpg" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblstatus" layoutX="58.0" layoutY="96.0" prefHeight="83.0" prefWidth="745.0" text="Bienvenue au service de facturation de l'hôpital Sunnybrook " textFill="#ddc9bb">
+         <font>
+            <Font size="26.0" />
+         </font></Label>
+      <TextField fx:id="txtusername" layoutX="352.0" layoutY="224.0" prefHeight="38.0" prefWidth="197.0" promptText="Nom d'utilisateur" />
+      <TextField fx:id="txtpassword" layoutX="352.0" layoutY="291.0" prefHeight="38.0" prefWidth="197.0" promptText="Mot de passe" />
+      <Button fx:id="bttnlogin" layoutX="410.0" layoutY="380.0" mnemonicParsing="false" onAction="#Login" styleClass="success" stylesheets="@logapplication.css" text="Entrer" />
+      <Label layoutX="235.0" layoutY="181.0" text="Veuillez entrer votre identifiant ci-dessous:" textFill="#ddc9bb">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="135.0" fitWidth="431.0" layoutX="215.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../Downloads/logo-colour.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

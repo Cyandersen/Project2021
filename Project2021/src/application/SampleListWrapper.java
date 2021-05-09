@@ -7,7 +7,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="sample")
 
-
 public class SampleListWrapper 
 {
 	private List<Sample> sample;
@@ -17,12 +16,7 @@ public class SampleListWrapper
 		return sample;
 	}
 	public void setEtudiants(List<Sample> etudiants)
-	
 	{
 		this.sample=etudiants;
-	}
-	
-
-	
-	
+	}	
 }
