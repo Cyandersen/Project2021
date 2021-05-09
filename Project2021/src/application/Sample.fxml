@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -26,7 +27,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <MenuBar fx:id="menu" layoutX="6.0" layoutY="2.0" styleClass="primary" stylesheets="@application.css">
+      <MenuBar fx:id="menu" layoutY="-1.0" prefHeight="30.0" prefWidth="77.0" styleClass="primary" stylesheets="@application.css">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -34,16 +35,6 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Ouvrir" />
                   <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Save" />
                   <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Save under" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
             </items>
           </Menu>
         </menus>

@@ -1,3 +1,10 @@
+/*
+* Author: cy.andersen
+* Date: May 7, 2021
+* Description:
+* Style Sheet pour le programme
+*/
+
 .root {
 	-fx-body-color : #9f7656;
 	-fx-outer-border : #9f7656;

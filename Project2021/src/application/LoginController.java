@@ -1,3 +1,9 @@
+/*
+* Author: cy.andersen
+* Date: May 7, 2021
+* Description:
+* Contrôleur pour programme de login
+*/
 package application;
 
 import javafx.event.ActionEvent;
@@ -27,12 +33,10 @@ public class LoginController {
     	this.main=main;
     }
   
-    
-    
-    
+    //pour ouvrir la fenetre de Sample avec l=informations de l'usager
     public void Login(ActionEvent event) throws Exception
     {
-    	if(txtusername.getText().equals("user") && txtpassword.getText().equals("pass"))
+    	if(txtusername.getText().equals("username") && txtpassword.getText().equals("password"))
     	{ main.Sample();
     	} else { 
     		lblstatus.setText("login fail");}

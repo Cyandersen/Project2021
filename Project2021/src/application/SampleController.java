@@ -1,3 +1,9 @@
+/*
+* Author: cy.andersen
+* Date: May 7, 2021
+* Description:
+* Contrôleur pour programme de facturation
+*/
 package application;
 
 import java.io.File;
@@ -76,31 +82,37 @@ public class SampleController implements Initializable {
 
 	@FXML
 	private TextField txtpro;
-	
+
 	@FXML
-    private Label lbltotal;
+	private Label lbltotal;
 
-    @FXML
-    private TextField txtotal;
+	@FXML
+	private TextField txtotal;
 
-    @FXML
-    private TextField txtusername;
-    
-    private Double total1=0.0;
+	@FXML
+	private TextField txtusername;
 
+	//variable pour le total
+	private Double total1=0.0;
+
+	// liste pour les departements du l'hopital qui permettra de donner les valeurs au combobox
 	private ObservableList<String> list=(ObservableList<String>) FXCollections.observableArrayList("Service ambulatoire (OPD)", "Service d'hospitalisation (IP)", "Service médical", "Service d'urgence", "Service infirmier", "Service paramédical", "Service de médecine physique");
 
+	// Placer les donnes dans une observable list
 	public ObservableList<Sample> SampleData=FXCollections.observableArrayList();
 
+	// Creer une methode pour acceder a la liste des donnes
 	public ObservableList<Sample> getSampleData()
 	{
 		return SampleData;
 	}
-	
+
+	//attribuer les valeurs
 	@Override
 	public void initialize(URL location, ResourceBundle resources) 
 	{
 		combodept.setItems(list);
+		//attribuer les valeurs aux colonnes du tableView
 		coldate.setCellValueFactory(new PropertyValueFactory<>("date"));
 		colpro.setCellValueFactory(new PropertyValueFactory<>("procedure"));
 		colcharge.setCellValueFactory(new PropertyValueFactory<>("charges"));
@@ -113,13 +125,16 @@ public class SampleController implements Initializable {
 		buttonrec.setDisable(true);
 
 		showInfo(null);
+		//Mettre a jour l'affichage d'un valeur selectionné
 		table.getSelectionModel().selectedItemProperty().addListener((
 				observable, oldValue, newValue)-> showInfo(newValue));
 	}
 
+	//ajouter les valeurs au tableau 
 	@FXML
 	void ajouter()
 	{
+		//verifier si un champ n'est pas vide
 		if(noEmptyInput())
 		{
 			Sample tmp=new Sample();
@@ -137,7 +152,8 @@ public class SampleController implements Initializable {
 			clearFields();
 		}
 	}
-	
+
+	//Effacer le contenu des champs
 	@FXML
 	void clearFields() 
 	{
@@ -148,7 +164,7 @@ public class SampleController implements Initializable {
 		txtnum.setText("");
 	}
 
-
+	// Afficher les valeurs au tableau
 	public void showInfo(Sample sample)
 	{
 		if(sample !=null)
@@ -168,11 +184,13 @@ public class SampleController implements Initializable {
 			clearFields();
 		}
 	}
-	
+
+	//Modifier un valeur deja dans le tableau
 	@FXML
 	public void updateInfo()
 	{
 		{
+			//verifier si un champ n'est pas vide
 			if(noEmptyInput())
 			{
 				Sample sample=table.getSelectionModel().getSelectedItem();
@@ -189,226 +207,241 @@ public class SampleController implements Initializable {
 				refreshTotal();
 			}
 		}
-		}
-	
+	}
+
+	//Effacer un valeur du tableau
 	@FXML
 	public void deleteInfo()
+	{
+		int selectedIndex = table.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >=0)
 		{
-			int selectedIndex = table.getSelectionModel().getSelectedIndex();
-			if (selectedIndex >=0)
-			{
-				Sample sample=table.getSelectionModel().getSelectedItem();
-				Alert alert=new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Effacer");
-				alert.setContentText("Confirm la surpression");
-				Optional<ButtonType> result=alert.showAndWait();
-				if(result.get()==ButtonType.OK)
-					table.getItems().remove(selectedIndex);
-					Double montant = sample.getCharges();
-					total1= total1 - montant;
-					txtotal.setText(Double.toString(montant));
-				}
-			}
-		
-		void refreshTotal()
+			Sample sample=table.getSelectionModel().getSelectedItem();
+			Alert alert=new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Effacer");
+			alert.setContentText("Confirm la surpression");
+			Optional<ButtonType> result=alert.showAndWait();
+			if(result.get()==ButtonType.OK)
+				table.getItems().remove(selectedIndex);
+			Double montant = sample.getCharges();
+			total1= total1 - montant;
+			txtotal.setText(Double.toString(montant));
+		}
+	}
+
+	//mettre à jour le total avec la valeur modifiée
+	void refreshTotal()
+	{
+		Double tot=0.0;
+		for(int i=0;i<table.getItems().size();i++)
 		{
-			Double tot=0.0;
-			for(int i=0;i<table.getItems().size();i++)
-			{
-				tot = tot + Double.valueOf(String.valueOf(table.getColumns().get(4).getCellObservableValue(i).getValue()));
-			}
-			txtotal.setText(Double.toString(tot));
-					
+			tot = tot + Double.valueOf(String.valueOf(table.getColumns().get(4).getCellObservableValue(i).getValue()));
 		}
-		
-		
-		public File getInfoFilePath()
+		txtotal.setText(Double.toString(tot));
+
+	}
+
+	//Sauvegarde de données
+	
+	//Recuperer le chemin path des fichiers si ca existe
+	public File getInfoFilePath()
+	{
+		Preferences prefs = Preferences.userNodeForPackage(Main.class);
+		String filePath = prefs.get("filePath", null);
+
+		if (filePath != null)
 		{
-			Preferences prefs = Preferences.userNodeForPackage(Main.class);
-			String filePath = prefs.get("filePath", null);
-
-			if (filePath != null)
-			{
-				return new File(filePath);
-			}
-			else
-			{
-				return null;
-			}
+			return new File(filePath);
 		}
-
-		public void setInfoFilePath(File file)
+		else
 		{
-			Preferences prefs = Preferences.userNodeForPackage(Main.class);
-			if (file !=null)
-			{
-				prefs.put("filePath", file.getPath());
-			}
-			else
-			{
-				prefs.remove("filePath");
-			}
+			return null;
 		}
+	}
 
-		public void loadInfoDataFromFile(File file)
+	//Attribuer un chemin (path) de fichiers
+	public void setInfoFilePath(File file)
+	{
+		Preferences prefs = Preferences.userNodeForPackage(Main.class);
+		if (file !=null)
 		{
-			try {
-				JAXBContext context = JAXBContext.newInstance(SampleListWrapper.class);
-				Unmarshaller um = context.createUnmarshaller();
-
-				SampleListWrapper wrapper = (SampleListWrapper) um.unmarshal(file);
-				SampleData.clear();
-				SampleData.addAll(wrapper.getEtudiants());
-				setInfoFilePath(file);
-				Stage pStage=(Stage)table.getScene().getWindow();
-				pStage.setTitle(file.getName());
-
-			} catch (Exception e) {
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Erreur");
-				alert.setHeaderText("Les données n'ont pas éte trouvées");
-				alert.setContentText("Les données ne pouvaient pas étre trouvées dans le fichier : \n" +file.getPath());
-				alert.showAndWait();
-			}
+			prefs.put("filePath", file.getPath());
 		}
-
-		public void saveInfoDatatoFile(File file)
+		else
 		{
-			try {
-				JAXBContext context = JAXBContext.newInstance(SampleListWrapper.class);
-				Marshaller m = context.createMarshaller();
-				m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-				SampleListWrapper wrapper = new SampleListWrapper();
-				wrapper.setEtudiants(SampleData);
-
-				m.marshal(wrapper, file);
-
-				setInfoFilePath(file);
-
-				Stage pStage=(Stage)table.getScene().getWindow();
-				pStage.setTitle(file.getName());
-
-			} catch (Exception e) {
-
-
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Erreur");
-				alert.setHeaderText("Données non sauvegardées");
-				alert.setContentText("Les données ne pouvaient pas étre sauvegardées dans le fichier:\n" + file.getPath());
-				alert.showAndWait();
-			}
+			prefs.remove("filePath");
 		}
+	}
 
-		@FXML
-		private void handleNew()
+	//Prendre les donnees de type XML et les convertit en donnees de type javaFX
+	public void loadInfoDataFromFile(File file)
+	{
+		try {
+			JAXBContext context = JAXBContext.newInstance(SampleListWrapper.class);
+			Unmarshaller um = context.createUnmarshaller();
+
+			SampleListWrapper wrapper = (SampleListWrapper) um.unmarshal(file);
+			SampleData.clear();
+			SampleData.addAll(wrapper.getEtudiants());
+			setInfoFilePath(file);
+			//Donner le titre du ficher chargé
+			Stage pStage=(Stage)table.getScene().getWindow();
+			pStage.setTitle(file.getName());
+
+		} catch (Exception e) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erreur");
+			alert.setHeaderText("Les données n'ont pas éte trouvées");
+			alert.setContentText("Les données ne pouvaient pas étre trouvées dans le fichier : \n" +file.getPath());
+			alert.showAndWait();
+		}
+	}
+	
+	//Prendre les donnees de type JavaFx et les convertit en type XML
+	public void saveInfoDatatoFile(File file)
+	{
+		try {
+			JAXBContext context = JAXBContext.newInstance(SampleListWrapper.class);
+			Marshaller m = context.createMarshaller();
+			m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			SampleListWrapper wrapper = new SampleListWrapper();
+			wrapper.setEtudiants(SampleData);
+
+			m.marshal(wrapper, file);
+
+			//Sauvegarde dans le registre
+			setInfoFilePath(file);
+			//Donner le titre du ficher sauvegardé
+			Stage pStage=(Stage)table.getScene().getWindow();
+			pStage.setTitle(file.getName());
+
+		} catch (Exception e) {
+
+
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erreur");
+			alert.setHeaderText("Données non sauvegardées");
+			alert.setContentText("Les données ne pouvaient pas étre sauvegardées dans le fichier:\n" + file.getPath());
+			alert.showAndWait();
+		}
+	}
+
+	//Commencer un nouveau ficher
+	@FXML
+	private void handleNew()
+	{
+		getSampleData().clear();
+		setInfoFilePath(null);
+	}
+
+	//ouvrir un nouveau ficher
+	@FXML
+	private void handleOpen() {
+
+		FileChooser fileChooser = new FileChooser();
+		//Permettre un filtre sur l'extension du fichier a chercher
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+		// Montrer le dialogue
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		File file = fileChooser.showOpenDialog(null);
+
+		if (file !=null)
 		{
-			getSampleData().clear();
-			setInfoFilePath(null);
+			loadInfoDataFromFile(file);
 		}
+	}
 
-		@FXML
-		private void handleOpen() {
+	@FXML
+	private void handleSave() {
 
-			FileChooser fileChooser = new FileChooser();
+		File etudiantFile = getInfoFilePath();
+		if (etudiantFile != null){
+			saveInfoDatatoFile(etudiantFile);} 
+		else {
+			handleSaveAs();
+		}
+	}
 
-			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+	//Ouvrir le FileChooser pour trouver le chemin
+	@FXML
+	private void handleSaveAs() {
+		FileChooser fileChooser = new FileChooser();
 
-			fileChooser.getExtensionFilters().add(extFilter);
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
 
-			File file = fileChooser.showOpenDialog(null);
+		//Sauvegarde
+		File file = fileChooser.showSaveDialog(null);
 
-			if (file !=null)
-			{
-				loadInfoDataFromFile(file);
+		if (file !=null) {
+			//Verification de l'extension
+			if(!file.getPath().endsWith(".xml")) {
+				file = new File(file.getPath() + ".xml");
+
 			}
+			saveInfoDatatoFile(file);
 		}
+	}
 
-		@FXML
-		private void handleSave() {
-
-			File etudiantFile = getInfoFilePath();
-			if (etudiantFile != null){
-				saveInfoDatatoFile(etudiantFile);} 
-			else {
-				handleSaveAs();
-			}
-		}
-
-		@FXML
-		private void handleSaveAs() {
-			FileChooser fileChooser = new FileChooser();
-
-			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
-
-			File file = fileChooser.showSaveDialog(null);
-
-			if (file !=null) {
-
-				if(!file.getPath().endsWith(".xml")) {
-					file = new File(file.getPath() + ".xml");
-
-				}
-				saveInfoDatatoFile(file);
-			}
-		}
-
-		@FXML
-		public void verifNum()
+	//mehode pour trouvr des input non mumeriques
+	@FXML
+	public void verifNum()
+	{
+		txtcharge.textProperty().addListener((observable,oldValue,newValue)->
 		{
-			txtcharge.textProperty().addListener((observable,oldValue,newValue)->
+			if(!newValue.matches("^[0-9](\\.[0-9]+)?$"))
 			{
-				if(!newValue.matches("^[0-9](\\.[0-9]+)?$"))
-				{
-					txtcharge.setText(newValue.replaceAll("[^\\d*\\.]", ""));
-				}
-			});
+				txtcharge.setText(newValue.replaceAll("[^\\d*\\.]", ""));
+			}
+		});
 
-			txtnum.textProperty().addListener((observable,oldValue,newValue)->
-			{
-				if(!newValue.matches("^[0-9](\\.[0-9]+)?$"))
-				{
-					txtnum.setText(newValue.replaceAll("[^\\d*\\.]", ""));
-				}
-			});	
-
-		}
-
-		@FXML
-		private Boolean noEmptyInput()
+		txtnum.textProperty().addListener((observable,oldValue,newValue)->
 		{
-			String errorMessage="";
-			if(txtdate.getText().trim().equals(""))
+			if(!newValue.matches("^[0-9](\\.[0-9]+)?$"))
 			{
-				errorMessage+="Le champ nom ne doit pas etre vide! \n";
+				txtnum.setText(newValue.replaceAll("[^\\d*\\.]", ""));
 			}
-			if(txtnum.getText().trim().equals(""))
-			{
-				errorMessage+="Le champ number ne doit pas etre vide! \n";
-			}
-			if(txtcharge.getText().trim().equals(""))
-			{
-				errorMessage+="Le champ charge ne doit pas etre vide! \n";
-			}
-			if(txtpro.getText().trim().equals(""))
-			{
-				errorMessage+="Le champ pro ne doit pas etre vide! \n";
-			}
-			if(combodept.getValue()==null)
-			{
-				errorMessage+="Le champ dept ne doit pas etre vide! \n";
-			}
-			if(errorMessage.length()==0)
-			{
-				return true;
-			}
-			else
-			{
-				Alert alert=new Alert(AlertType.ERROR);
-				alert.setTitle("Champs Manquants");
-				alert.setHeaderText("Complete Champs Manquants");
-				alert.setContentText(errorMessage);
-				alert.showAndWait();
-				return false;
-			}
+		});	
+
+	}
+	
+	//Verfifier les champs vides
+	@FXML
+	private Boolean noEmptyInput()
+	{
+		String errorMessage="";
+		if(txtdate.getText().trim().equals(""))
+		{
+			errorMessage+="Le champ date de la procédure  ne doit pas etre vide! \n";
 		}
-	}	
+		if(txtnum.getText().trim().equals(""))
+		{
+			errorMessage+="Le champ numéro du patient ne doit pas etre vide! \n";
+		}
+		if(txtcharge.getText().trim().equals(""))
+		{
+			errorMessage+="Le champ frais ne doit pas etre vide! \n";
+		}
+		if(txtpro.getText().trim().equals(""))
+		{
+			errorMessage+="Le champ procédure ne doit pas etre vide! \n";
+		}
+		if(combodept.getValue()==null)
+		{
+			errorMessage+="Le champ département de supervision ne doit pas etre vide! \n";
+		}
+		if(errorMessage.length()==0)
+		{
+			return true;
+		}
+		else
+		{
+			Alert alert=new Alert(AlertType.ERROR);
+			alert.setTitle("Champs Manquants");
+			alert.setHeaderText("Complete Champs Manquants");
+			alert.setContentText(errorMessage);
+			alert.showAndWait();
+			return false;
+		}
+	}
+}	

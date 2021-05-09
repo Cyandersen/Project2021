@@ -1,5 +1,11 @@
+/*
+* Author: cy.andersen
+* Date: May 7, 2021
+* Description:
+* Main pour le programme
+*/
 package application;
-	
+
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -16,7 +22,8 @@ public class Main extends Application {
 		this.primaryStage=primaryStage;
 		Login();
 	}
-	
+
+	//pour charger la premiere fenetre "Login"
 	public void Login()
 	{
 		try {
@@ -25,16 +32,16 @@ public class Main extends Application {
 			Scene scene = new Scene(pane);
 			LoginController LoginController=loader.getController();
 			LoginController.setMain(this);
-			scene.getStylesheets().add(getClass().getResource("logapplication.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Identification");
 			primaryStage.show();
-	} catch (IOException e) {
-		e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-	}
-	
-	
+
+	//pour charger la deuxieme fenetre "Sample"
 	public void Sample()
 	{
 		try {
@@ -42,17 +49,15 @@ public class Main extends Application {
 			AnchorPane pane=loader.load();
 			Scene scene = new Scene(pane);
 			SampleController SampleController=loader.getController();
-			scene.getStylesheets().add(getClass().getResource("logapplication.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Identification");
 			primaryStage.show();
-	} catch (IOException e) {
-		e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-		
-	}
-	
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}

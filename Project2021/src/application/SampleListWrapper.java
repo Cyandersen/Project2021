@@ -1,3 +1,9 @@
+/*
+* Author: cy.andersen
+* Date: May 7, 2021
+* Description:
+* Warpper pour le SampleController
+*/
 package application;
 
 import java.util.List;
@@ -15,8 +21,8 @@ public class SampleListWrapper
 	{
 		return sample;
 	}
-	public void setEtudiants(List<Sample> etudiants)
+	public void setEtudiants(List<Sample> sample)
 	{
-		this.sample=etudiants;
+		this.sample=sample;
 	}	
 }
