@@ -9,6 +9,11 @@
 	-fx-body-color : #9f7656;
 	-fx-outer-border : #9f7656;
 }
+
+.pane{
+    -fx-background-image: url("wallpaper-blue.jpg");
+    -fx-background-repeat: stretch; }
+    
 .button:focused, .toggle-button:focused,
 .split-menu-button:focused, .menu-button:focused,
 .number-button:focused,
