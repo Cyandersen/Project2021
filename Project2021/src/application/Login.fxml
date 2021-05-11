@@ -11,7 +11,7 @@
    <children>
       <ImageView fitHeight="521.0" fitWidth="845.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../Downloads/wallpaper-blue.jpg" />
+            <Image url="http://wallpaperping.com/wp-content/uploads/2018/06/wallpaper-blue.jpg" />
          </image>
       </ImageView>
       <Label fx:id="lblstatus" layoutX="58.0" layoutY="96.0" prefHeight="83.0" prefWidth="745.0" text="Bienvenue au service de facturation de l'hôpital Sunnybrook " textFill="#ddc9bb">
@@ -28,7 +28,7 @@
       </Label>
       <ImageView fitHeight="135.0" fitWidth="431.0" layoutX="215.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../Downloads/logo-colour.png" />
+            <Image url="https://sunnybrook.ca/foundation/impossible/assets/img/logo-colour.png" />
          </image>
       </ImageView>
    </children>
