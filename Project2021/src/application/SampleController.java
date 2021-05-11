@@ -177,7 +177,6 @@ public class SampleController implements Initializable {
 			buttonmod.setDisable(false);
 			buttoneff.setDisable(false);
 			buttonrec.setDisable(false);
-
 		}
 		else
 		{
@@ -194,7 +193,6 @@ public class SampleController implements Initializable {
 			if(noEmptyInput())
 			{
 				Sample sample=table.getSelectionModel().getSelectedItem();
-
 				sample.setDate(txtdate.getText());
 				sample.setProcedure(txtpro.getText());
 				sample.setCharges(Double.parseDouble(txtcharge.getText()));
@@ -222,10 +220,10 @@ public class SampleController implements Initializable {
 			alert.setContentText("Confirm la surpression");
 			Optional<ButtonType> result=alert.showAndWait();
 			if(result.get()==ButtonType.OK)
-				table.getItems().remove(selectedIndex);
+				{ table.getItems().remove(selectedIndex);
 			Double montant = sample.getCharges();
 			total1= total1 - montant;
-			txtotal.setText(Double.toString(total1));
+			txtotal.setText(Double.toString(total1));}
 		}
 	}
 
@@ -317,7 +315,6 @@ public class SampleController implements Initializable {
 
 		} catch (Exception e) {
 
-
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Erreur");
 			alert.setHeaderText("Données non sauvegardées");
@@ -331,6 +328,8 @@ public class SampleController implements Initializable {
 	private void handleNew()
 	{
 		getSampleData().clear();
+		total1=0.0;
+		txtotal.setText(Double.toString(total1));		
 		setInfoFilePath(null);
 	}
 
