@@ -25,6 +25,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TableColumn;
@@ -91,6 +92,9 @@ public class SampleController implements Initializable {
 
 	@FXML
 	private TextField txtusername;
+	
+	@FXML
+	private DatePicker datepicker;
 
 	//variable pour le total
 	private Double total1=0.0;
@@ -140,7 +144,7 @@ public class SampleController implements Initializable {
 			Sample tmp=new Sample();
 
 			tmp=new Sample();
-			tmp.setDate(txtdate.getText());
+			tmp.setDate(datepicker.getValue());
 			tmp.setProcedure(txtpro.getText());
 			tmp.setNumber(Double.parseDouble(txtnum.getText()));
 			tmp.setCharges(Double.parseDouble(txtcharge.getText()));
@@ -158,7 +162,7 @@ public class SampleController implements Initializable {
 	void clearFields() 
 	{
 		combodept.setValue(null);
-		txtdate.setText("");
+		datepicker.setValue(null);
 		txtpro.setText("");
 		txtcharge.setText("");
 		txtnum.setText("");	
@@ -170,7 +174,7 @@ public class SampleController implements Initializable {
 		if(sample !=null)
 		{
 			combodept.setValue(sample.getDepartment());
-			txtdate.setText(sample.getDate());
+			datepicker.setValue(sample.getDate());
 			txtpro.setText(sample.getProcedure());
 			txtcharge.setText(Double.toString(sample.getCharges()));
 			txtnum.setText(Double.toString(sample.getNumber()));
@@ -193,7 +197,7 @@ public class SampleController implements Initializable {
 			if(noEmptyInput())
 			{
 				Sample sample=table.getSelectionModel().getSelectedItem();
-				sample.setDate(txtdate.getText());
+				sample.setDate(datepicker.getValue());
 				sample.setProcedure(txtpro.getText());
 				sample.setCharges(Double.parseDouble(txtcharge.getText()));
 				sample.setNumber(Double.parseDouble(txtnum.getText()));
@@ -409,7 +413,7 @@ public class SampleController implements Initializable {
 	private Boolean noEmptyInput()
 	{
 		String errorMessage="";
-		if(txtdate.getText().trim().equals(""))
+		if(datepicker.getValue()==null)
 		{
 			errorMessage+="Le champ date de la procédure  ne doit pas etre vide! \n";
 		}

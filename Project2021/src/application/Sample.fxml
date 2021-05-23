@@ -69,14 +69,14 @@
                <font>
                   <Font size="18.0" />
                </font></Label>
-            <TextField fx:id="txtdate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox fx:id="combodept" prefWidth="150.0" stylesheets="@application.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="combodept" prefHeight="27.0" prefWidth="192.0" promptText="Choisir un département" stylesheets="@application.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="txtcharge" onAction="#verifNum" onKeyTyped="#verifNum" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Numéro du patient" textFill="#d0bdb0">
                <font>
                   <Font size="18.0" />
                </font></Label>
             <TextField fx:id="txtnum" onKeyTyped="#verifNum" stylesheets="@application.css" GridPane.columnIndex="1" />
+            <DatePicker fx:id="datepicker" editable="false" prefHeight="27.0" prefWidth="266.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <Button fx:id="buttonajo" layoutX="110.0" layoutY="601.0" mnemonicParsing="false" onAction="#ajouter" styleClass="warning" stylesheets="@application.css" text="Ajouter" />
